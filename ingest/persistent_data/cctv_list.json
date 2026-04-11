@@ -1,0 +1,276 @@
+{
+    "cameraArray": [
+      [
+        "22038",
+        -6.965059,
+        107.800353,
+        1,
+        "\n    22038\n    NAGREG - BTS. KAB. BANDUNG & GARUT\n    Kota Bandung, JAWA BARAT\n                            ",
+        "APC22038/"
+      ],
+      [
+        "22037",
+        -6.938431748250849,
+        107.73510572853868,
+        2,
+        "\n    22037\n    Bundaran Cibiru - Tugu Batas Kab. Bandung dan Garut\n    Kota Bandung, JAWA BARAT\n                            ",
+        "APC22037/"
+      ],
+      [
+        "2203311K",
+        -6.851428614763325,
+        107.49740817624972,
+        3,
+        "\n    2203311K\n    BTS. KOTA PADALARANG - BTS. KOTA BANDUNG\n    Kabupaten Bandung Barat, JAWA BARAT\n                            ",
+        "APC22033/"
+      ],
+      [
+        "21002",
+        -6.056445852598069,
+        106.1120356666794,
+        4,
+        "\n    21002\n    BTS. KOTA CILEGON - BTS. KOTA SERANG\n    Kabupaten Serang, BANTEN\n                            ",
+        "APC21002/"
+      ],
+      [
+        "17034",
+        -5.366083795491564,
+        105.14491954232894,
+        5,
+        "\n    17034\n    Bts. Kota Bandar Lampung - Gedong Tataan\n    Kota Bandar Lampung, LAMPUNG\n                            ",
+        "APC17034/"
+      ],
+      [
+        "17012",
+        -4.875453007464227,
+        104.96849481418971,
+        6,
+        "\n    17012\n    SP.Kotabumi - Terbanggi Besar\n    Kabupaten Lampung Utara, LAMPUNG\n                            ",
+        "APC17012/"
+      ],
+      [
+        "17015",
+        -5.3594769782786855,
+        105.22388306093144,
+        7,
+        "\n    17015\n    Tegineneng - Sp. Tanjung Karang\n    Kabupaten Lampung Selatan, LAMPUNG\n                            ",
+        "APC17015/"
+      ],
+      [
+        "24090",
+        -7.18235,
+        110.425179,
+        8,
+        "\n    24090\n    Bts. Kota Ungaran - Bawen\n    Kabupaten Semarang, JAWA TENGAH\n                            ",
+        "APC24090/"
+      ],
+      [
+        "22020",
+        -6.762597,
+        108.597426,
+        9,
+        "\n    22020\n    BTS. KOTA CIREBON - LOSARI (BTS. PROV JAWA TENGAH)\n    Kabupaten Cirebon, JAWA BARAT\n                            ",
+        "APC22020/"
+      ],
+      [
+        "2201411",
+        -6.703997,
+        108.4329,
+        10,
+        "\n    2201411\n    JLN. RAYA PALIMANAN 2 (PALIMANAN)\n    Kabupaten Cirebon, JAWA BARAT\n                            ",
+        "APC2201411/"
+      ],
+      [
+        "24036",
+        -7.41057059751344,
+        109.59854290779506,
+        11,
+        "\n    24036\n    KLAMPOK - BTS. KOTA BANJARNEGARA\n    Kabupaten Banjarnegara, JAWA TENGAH\n                            ",
+        "APC24036/"
+      ],
+      [
+        "28057",
+        -8.100171553185449,
+        112.33656262259615,
+        12,
+        "\n    28057\n    BTS. KOTA WLINGI - BTS. KAB. MALANG & JLN. FLAMBOYAN\n    Kabupaten Blitar, JAWA TIMUR\n                            ",
+        "APC28057/"
+      ],
+      [
+        "22078",
+        -6.50668342020999,
+        107.46256055491168,
+        13,
+        "\n    22078\n    BTS. KAB. KARAWANG PWK - SADANG (CIKAMPEK-SADANG)\n    Kabupaten Purwakarta, JAWA BARAT\n                            ",
+        "APC22078/"
+      ],
+      [
+        "26015",
+        -7.681344,
+        110.338788,
+        14,
+        "\n    26015\n    TEMPEL (SALAM) BTS. PROV. JATENG - BTS. KOTA SLEMAN\n    Kabupaten Sleman, D.I. YOGYAKARTA\n                            ",
+        "APC26015/"
+      ],
+      [
+        "26001",
+        -7.889725,
+        110.1033333,
+        15,
+        "\n    26001\n    KARANG NONGKO (BTS. PROV. JATENG) - TOYAN\n    Kabupaten Kulon Progo , D.I. YOGYAKARTA\n                            ",
+        "APC26001/"
+      ],
+      [
+        "28038",
+        -7.598727382882465,
+        112.11544952758926,
+        16,
+        "\n    28038\n    BTS. KAB. KEDIRI - BTS. KOTA JOMBANG\n    Kabupaten Jombang, JAWA TIMUR\n                            ",
+        "APC28038/"
+      ],
+      [
+        "22070",
+        -6.431773,
+        106.732886,
+        17,
+        "\n    22070\n    BTS. DEPOK-BOGOR - BOGOR\n    Kabupaten Bogor, JAWA BARAT\n                            ",
+        "APC22070/"
+      ],
+      [
+        "28099",
+        -7.912417,
+        112.6565,
+        18,
+        "\n    28099\n    BTS. KAB. PASURUAN - KARANGLO\n    Kabupaten Malang, JAWA TIMUR\n                            ",
+        "APC28099/"
+      ],
+      [
+        "2807011",
+        -8.195276702794759,
+        113.63852442304635,
+        19,
+        "\n    2807011\n    JLN. BRAWIJAYA (JEMBER)\n    Kabupaten Jember, JAWA TIMUR\n                            ",
+        "APC2807011/"
+      ],
+      [
+        "28094",
+        -7.569083,
+        112.691361,
+        20,
+        "\n    28094\n    GEMPOL - PANDAAN\n    Kabupaten Pasuruan, JAWA TIMUR\n                            ",
+        "APC28094/"
+      ],
+      [
+        "2202211",
+        -6.573564,
+        106.639287,
+        21,
+        "\n    2202211\n    JLN. RAYA LEUIWILIANG\n    Kabupaten Bogor, JAWA BARAT\n                            ",
+        "APC2202211/"
+      ],
+      [
+        "2200513",
+        -6.389998,
+        107.421402,
+        22,
+        "\n    2200513\n    JLN. JEND. A. YANI (CIKAMPEK)\n    Kabupaten Karawang, JAWA BARAT\n                            ",
+        "APC2200513/"
+      ],
+      [
+        "2202712",
+        -6.904509,
+        106.862843,
+        23,
+        "\n    2202712\n    JLN. RAYA CIBOLANG (CISAAT)\n    Kabupaten Sukabumi, JAWA BARAT\n                            ",
+        "APC2202712/"
+      ],
+      [
+        "24072",
+        -7.726158,
+        109.962612,
+        24,
+        "\n    24072\n    KUTOHARJO - BTS. KOTA PURWOREJO \n    Kabupaten Purworejo, JAWA TENGAH \n                            ",
+        "APC24072/"
+      ],
+      [
+        "2401412",
+        -6.983556,
+        110.354641,
+        25,
+        "\n    2401412\n    JLN. WALISONGO (SEMARANG) \n    Kota Semarang, JAWA TENGAH\n                            ",
+        "APC2401412/"
+      ],
+      [
+        "24078",
+        -7.118432303822153,
+        108.98859280693209,
+        26,
+        "\n    24078\n    PRUPUK - SP.3 UTARA JLN. LINGKAR BUMIAYU\n    Kabupaten Tegal, JAWA TENGAH\n                            ",
+        "APC24078/"
+      ],
+      [
+        "2200112",
+        -6.21740486728427,
+        106.9746291085728,
+        27,
+        "\n    2200112\n    JLN. SUDIRMAN (BEKASI) - JLN. A. YANI (BEKASI)\n    Kota Bekasi, JAWA BARAT\n                            ",
+        "APC2200112/"
+      ],
+      [
+        "2207312",
+        -6.561456780585793,
+        106.811752468584,
+        28,
+        "\n    2207312\n    JLN. RAYA KEDUNGHALANG (BOGOR)\n    Kota Bogor, JAWA BARAT\n                            ",
+        "APC2207312/"
+      ],
+      [
+        "22006",
+        -6.37884,
+        107.512745,
+        29,
+        "\n    22006\n    BTS. KOTA CIKAMPEK - KAB. SUBANG-KARAWANG\n    Kabupaten Karawang, JAWA BARAT\n                            ",
+        "APC22006/"
+      ],
+      [
+        "2200311",
+        -6.268161,
+        107.125993,
+        30,
+        "\n    2200311\n    JLN. RAYA BITUNG (CIKARANG)\n    Kabupaten Bekasi, JAWA BARAT\n                            ",
+        "APC2200311/"
+      ],
+      [
+        "2400717",
+        -6.903785,
+        109.695965,
+        31,
+        "\n    2400717\n    JLN. DOKTER SUTOMO (PEKALONGAN)\n    Kota Pekalongan, JAWA TENGAH\n                            ",
+        "APC2400717/"
+      ],
+      [
+        "28006",
+        -7.10127,
+        112.229197,
+        32,
+        "\n    28006\n    WIDANG/BEDAHAN - BTS. KOTA LAMONGAN\n    Kabupaten Lamongan, JAWA TIMUR\n                            ",
+        "APC28006/"
+      ],
+      [
+        "28025",
+        -7.69873,
+        114.027562,
+        33,
+        "\n    28025\n    BTS. KOTA SITUBONDO - BAJULMATI (BTS. KAB. BANYUWANGI)\n    Kota Situbondo, JAWA TIMUR\n                            ",
+        "APC28025/"
+      ],
+      [
+        "22009",
+        -6.305845,
+        107.936437,
+        34,
+        "\n    22009\n    SEWO - LOH BENER\n    Kabupaten Indramayu, JAWA BARAT\n                            ",
+        "APC22009/"
+      ]
+    ]
+  }
