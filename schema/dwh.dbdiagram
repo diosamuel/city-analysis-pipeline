@@ -1,0 +1,155 @@
+Table dim_date {
+  date_sk bigint [pk]
+  full_date date [not null, unique]
+  year smallint [not null]
+  quarter smallint [not null]
+  month smallint [not null]
+  month_name varchar(16) [not null]
+  week_of_year smallint [not null]
+  day_of_month smallint [not null]
+  day_of_week smallint [not null]
+  day_name varchar(16) [not null]
+  is_weekend boolean [not null]
+  is_holiday boolean [not null, default: false]
+}
+
+Table dim_time {
+  time_sk bigint [pk]
+  full_time time [not null, unique]
+  hour smallint [not null]
+  minute smallint [not null]
+  period varchar(2) [not null]
+  time_band varchar(32) [not null]
+}
+
+Table dim_location {
+  location_sk bigint [pk]
+  adm1_code varchar(16)
+  adm2_code varchar(16)
+  adm3_code varchar(16)
+  adm4_code varchar(32)
+  provinsi varchar(128)
+  kotkab varchar(128)
+  kecamatan varchar(128)
+  kelurahan varchar(128)
+  latitude double
+  longitude double
+  elevation float [default: 0]
+  timezone varchar(32)
+  luas double
+  penduduk bigint
+}
+
+Table dim_camera {
+  camera_code varchar(32) [pk]
+  location_sk bigint [not null]
+  latitude double
+  longitude double
+  location_text text
+  route_slug varchar(64)
+  adm2_code varchar(13)
+  adm4_code varchar(13)
+}
+
+Table dim_aqi_category {
+  aqi_category_sk smallint [pk]
+  category_code varchar(32) [not null, unique]
+  category_name varchar(64) [not null]
+  min_value int
+  max_value int
+}
+
+Table dim_aqi_station {
+  aqi_station_sk bigint [pk]
+  location_sk bigint [not null]
+  id_stasiun varchar(128)
+  nama varchar(256)
+  alamat text
+  tipe varchar(8)
+  tipe_text varchar(32)
+  stasiun_uji varchar(8)
+  p3e varchar(64)
+}
+
+Table fact_smart_city {
+  fact_sk bigint [pk]
+  camera_code varchar(32) [not null]
+  location_sk bigint [not null]
+  date_sk bigint [not null]
+  time_sk bigint [not null]
+
+  speed_normal numeric(10,3)
+  speed_opposite numeric(10,3)
+  speed_gol_normal numeric(10,3)
+  speed_gol_opposite numeric(10,3)
+  speed_max_gol_normal numeric(10,3)
+  speed_max_gol_opposite numeric(10,3)
+  vehicle_count_normal int
+  vehicle_count_opposite int
+
+  volume_sm numeric(14,3)
+  volume_mp numeric(14,3)
+  volume_ks numeric(14,3)
+  volume_bb numeric(14,3)
+  volume_tb numeric(14,3)
+  total_volume_sm numeric(14,3)
+  total_volume_mp numeric(14,3)
+  total_volume_ks numeric(14,3)
+  total_volume_bb numeric(14,3)
+  total_volume_tb numeric(14,3)
+
+  temperature numeric(5,2)
+  temperature_min numeric(5,2)
+  temperature_max numeric(5,2)
+  humidity smallint
+  humidity_min smallint
+  humidity_max smallint
+  weather_code smallint
+  weather_description varchar(128)
+  wind_speed numeric(6,2)
+  wind_direction varchar(8)
+  visibility_text varchar(64)
+
+  aqi_station_sk bigint
+  aqi_category_sk smallint
+  aqi_value int
+  aqi_dominant_param varchar(128)
+  pm10_actual numeric(10,2)
+  pm25_actual numeric(10,2)
+  so2_actual numeric(10,2)
+  co_actual numeric(10,2)
+  o3_actual numeric(10,2)
+  no2_actual numeric(10,2)
+  hc_actual numeric(10,2)
+  pm10_ispu smallint
+  pm25_ispu smallint
+  so2_ispu smallint
+  co_ispu smallint
+  o3_ispu smallint
+  no2_ispu smallint
+  hc_ispu smallint
+  pm10_critical int
+  pm25_critical int
+  so2_critical int
+  co_critical int
+  o3_critical int
+  no2_critical int
+  hc_critical int
+
+  ingested_at timestamp [not null]
+
+  indexes {
+    (camera_code)
+    (location_sk)
+    (date_sk)
+    (time_sk)
+    (camera_code, date_sk, time_sk) [unique]
+  }
+}
+
+Ref: fact_smart_city.camera_code > dim_camera.camera_code
+Ref: fact_smart_city.location_sk > dim_location.location_sk
+Ref: fact_smart_city.date_sk > dim_date.date_sk
+Ref: fact_smart_city.time_sk > dim_time.time_sk
+Ref: fact_smart_city.aqi_station_sk > dim_aqi_station.aqi_station_sk
+Ref: fact_smart_city.aqi_category_sk > dim_aqi_category.aqi_category_sk

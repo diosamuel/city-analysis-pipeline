@@ -1,0 +1,18 @@
+# Use this file when running dbt from this directory, or set:
+#   DBT_PROFILES_DIR=<path to this folder>
+#
+# Bronze/raw tables live in a separate DuckDB file (`raw/cctv.duckdb` by default).
+# dbt models materialize into the primary `path` database; sources use the
+# attached catalog `cctv` for raw/cctv.duckdb (alias + database in models/staging/_sources.yml).
+
+medallion:
+  target: duckdb
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('DBT_DUCKDB_PATH', 'dev.duckdb') }}"
+      threads: 4
+      attach:
+        - path: "{{ env_var('DBT_BRONZE_DUCKDB_PATH', '../raw/cctv.duckdb') }}"
+          type: duckdb
+          read_only: true

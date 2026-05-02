@@ -1,1 +1,10 @@
 pandas
+requests
+pydantic
+python-dotenv
+duckdb
+prettytable
+ipython
+dbt-core
+dbt-duckdb
+pyarrow

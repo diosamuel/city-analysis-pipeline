@@ -75,3 +75,9 @@ spark-warehouse/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+.bruin.yml
+
+# GCP service-account keyfiles
+.gcp/
+*.sa.json

@@ -1,0 +1,31 @@
+name: medallion
+version: 1.0.0
+config-version: 2
+
+profile: medallion
+
+require-dbt-version: [ ">=1.8.0", "<3.0.0" ]
+
+model-paths: [models]
+analysis-paths: [analyses]
+test-paths: [tests]
+seed-paths: [seeds]
+macro-paths: [macros]
+snapshot-paths: [snapshots]
+
+clean-targets:
+  - target
+  - dbt_packages
+
+models:
+  medallion:
+    +materialized: view
+    +persist_docs:
+      relation: true
+      columns: true
+    staging:
+      +materialized: view
+    silver:
+      +materialized: view
+    gold:
+      +materialized: table

@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  # Physical data: `raw/cctv.duckdb` (default attach path in profiles.yml via DBT_BRONZE_DUCKDB_PATH).
+  # dbt-duckdb exposes that file as DuckDB catalog `cctv` (see attach alias + database below).
+  - name: bronze
+    database: cctv
+    schema: main
+    description: Bronze layer tables stored in raw/cctv.duckdb
+    tables:
+      - name: air_quality
+      - name: all_timeseries_vehicle_speed
+      - name: bmkg_weather
+      - name: cctv_list_final
+      - name: hourly_vehicle_speed
+      - name: vehicle_speed
