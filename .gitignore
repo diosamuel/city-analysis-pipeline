@@ -84,3 +84,4 @@ Desktop.ini
 
 
 raw/*
+echo "*.duckdb" >> .gitignore
