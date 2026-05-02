@@ -81,3 +81,6 @@ Desktop.ini
 # GCP service-account keyfiles
 .gcp/
 *.sa.json
+
+
+raw/*
