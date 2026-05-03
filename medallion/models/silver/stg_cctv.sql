@@ -1,8 +1,8 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 WITH source AS (
     SELECT *
-    FROM {{ source('bronze', 'cctv_list_final') }}
+    FROM {{ source('sources', 'cctv_list_final') }}
 ),
 
 cleaned AS (
@@ -28,7 +28,7 @@ SELECT
     route_slug::VARCHAR                 AS route_slug,
     adm2::VARCHAR                       AS adm2,
     adm4::VARCHAR                       AS adm4,
-    location_text::VARCHAR              AS location_text,
+    -- location_text::VARCHAR              AS location_text,
     location_parts[1]::VARCHAR          AS kode,
     location_parts[2]::VARCHAR          AS jalan,
     location_parts[3]::VARCHAR          AS kabupaten

@@ -1,0 +1,1 @@
+ATTACH './source_data/raw_data.duckdb' AS cctv (TYPE duckdb, READ_ONLY);

@@ -1,10 +1,10 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 WITH label_cte AS (
     SELECT DISTINCT
         generate_subscripts(label5min_data::STRING[], 1) AS gol_id,
         unnest(label5min_data::STRING[]) AS gol
-    FROM {{ source('bronze', 'vehicle_speed') }}
+    FROM {{ source('sources', 'vehicle_speed') }}
 ),
 
 speed_cte AS (
@@ -13,7 +13,7 @@ speed_cte AS (
         camera_code,
         generate_subscripts(speed_normal::DOUBLE[], 1) AS gol_id,
         unnest(speed_normal::DOUBLE[]) AS speed
-    FROM {{ source('bronze', 'vehicle_speed') }}
+    FROM {{ source('sources', 'vehicle_speed') }}
 )
 
 SELECT

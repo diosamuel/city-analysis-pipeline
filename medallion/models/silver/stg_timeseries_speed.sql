@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 -- Vehicle-class codes (from KemenPUPR feed):
 --   sm  = sepeda motor        (motorcycle)
@@ -11,7 +11,7 @@
 
 WITH complete AS (
     SELECT *
-    FROM {{ source('bronze', 'all_timeseries_vehicle_speed') }}
+    FROM {{ source('sources', 'all_timeseries_vehicle_speed') }}
     WHERE json_array_length(hourly_label)          = 24
       AND json_array_length(datalast7normal_sm)    = 24
       AND json_array_length(datalast7normal_mp)    = 24

@@ -15,13 +15,13 @@ clean-targets:
 
 models:
   medallion:
-    +materialized: view
+    +materialized: table
     +persist_docs:
       relation: true
       columns: true
     staging:
-      +materialized: view
+      +materialized: table
     silver:
-      +materialized: view
+      +materialized: table
     gold:
       +materialized: table

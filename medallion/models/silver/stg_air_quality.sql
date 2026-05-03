@@ -1,8 +1,8 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 WITH source AS (
     SELECT *
-    FROM {{ source('bronze', 'air_quality') }}
+    FROM {{ source('sources', 'air_quality') }}
 )
 
 SELECT
@@ -47,6 +47,19 @@ SELECT
     t_hc::INTEGER                                 AS hc_time,
 
     param::VARCHAR                                AS dominant_param,
+    CASE
+        WHEN param IS NULL OR trim(param) = '' THEN NULL
+        ELSE to_json(
+            list_transform(
+                string_split(
+                    regexp_replace(param, '<sub>([^<]*)</sub>', '\1', 'g'),
+                    ','
+                ),
+                x -> trim(x)
+            )
+        )
+    END                                           AS dominant_params_json,
+
     val::INTEGER                                  AS aqi_value,
     cat::VARCHAR                                  AS aqi_category,
 
@@ -65,3 +78,7 @@ SELECT
     time_z::VARCHAR                               AS time_zone,
     waktu_text::VARCHAR                           AS observed_at_text
 FROM source
+
+
+-- normalization the time difference between time_offset
+-- SELECT observed_at, saq.observed_at_text, saq.time_zone FROM gold.main.stg_air_quality AS saq

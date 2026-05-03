@@ -1,18 +1,25 @@
-# Use this file when running dbt from this directory, or set:
-#   DBT_PROFILES_DIR=<path to this folder>
-#
-# Bronze/raw tables live in a separate DuckDB file (`raw/cctv.duckdb` by default).
-# dbt models materialize into the primary `path` database; sources use the
-# attached catalog `cctv` for raw/cctv.duckdb (alias + database in models/staging/_sources.yml).
-
+# Use: DBT_PROFILES_DIR=<this folder> when profiles.yml is not in ~/.dbt/.
 medallion:
-  target: duckdb
   outputs:
+    prod:
+      type: bigquery
+      method: service-account
+      keyfile:  /root/.dbt/learngcp-461809-4016cc4313d1.json
+      project: learngcp-461809
+      dataset: dbt_dio
+      threads: 1
+      timeout_seconds: 300
+      location: US
+      priority: interactive
+
     dev:
       type: duckdb
-      path: "{{ env_var('DBT_DUCKDB_PATH', 'dev.duckdb') }}"
+      path: "{{ env_var('DBT_DUCKDB_PATH', './medallion/gold.duckdb') }}"
       threads: 4
       attach:
-        - path: "{{ env_var('DBT_BRONZE_DUCKDB_PATH', '../raw/cctv.duckdb') }}"
+        - path: "{{ env_var('DBT_BRONZE_DUCKDB_PATH', './source_data/raw_data.duckdb') }}"
+          alias: cctv
           type: duckdb
           read_only: true
+
+  target: dev          

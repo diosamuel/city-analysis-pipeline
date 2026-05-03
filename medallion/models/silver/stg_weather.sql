@@ -1,8 +1,8 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 WITH wilayah AS (
     SELECT unnest(weather_data::JSON[], recursive := TRUE) AS w
-    FROM {{ source('bronze', 'bmkg_weather') }}
+    FROM {{ source('sources', 'bmkg_weather') }}
 ),
 
 daily_forecasts AS (

@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 WITH populate AS (
     SELECT
@@ -7,7 +7,7 @@ WITH populate AS (
         ingested_at,
         unnest(hourly_label::STRING[]) AS gol,
         generate_subscripts(hourly_label::STRING[], 1) AS "order"
-    FROM {{ source('bronze', 'hourly_vehicle_speed') }}
+    FROM {{ source('sources', 'hourly_vehicle_speed') }}
 )
 
 SELECT * FROM populate

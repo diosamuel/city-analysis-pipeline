@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars (gitignored) and adjust.
+# Authenticate:  gcloud auth application-default login
+
+project_id              = "your-gcp-project-id"
+google_default_region   = "us-central1"
+bigquery_location       = "US"
+dbt_dataset_id          = "dbt_dio"

@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  # Physical data: `source_data/raw_data.duckdb` (read-only attach; DBT_BRONZE_DUCKDB_PATH in profiles.yml).
+  # dbt-duckdb loads it as catalog `cctv` (attach `alias` = `database` below). If you see
+  # "catalog cctv does not exist", the attach failed—usually wrong cwd vs relative path; see README.
+  # `database: cctv` is DuckDB-only; `target: prod` (BigQuery) needs a separate raw-ingest story.
+  - name: sources
+    database: cctv
+    schema: main
+    description: Bronze layer tables in source_data/raw_data.duckdb (attached read-only)
+    tables:
+      - name: air_quality
+      - name: all_timeseries_vehicle_speed
+      - name: bmkg_weather
+      - name: cctv_list_final
+      - name: hourly_vehicle_speed
+      - name: vehicle_speed

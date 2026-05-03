@@ -24,8 +24,10 @@ wheels/
 *.egg
 MANIFEST
 
-# Virtual environments
+# Virtual environments & local env files (track .env.example)
 .env
+.env.*
+!.env.example
 .venv
 env/
 venv/
@@ -43,9 +45,6 @@ ENV/
 
 # pyenv
 .python-version
-
-# dotenv
-*.env
 
 # pytest / coverage
 htmlcov/
@@ -71,16 +70,41 @@ metastore_db/
 derby.log
 spark-warehouse/
 
+# dbt (repo root + any nested project)
+logs/
+**/dbt.log
+**/target/
+**/dbt_packages/
+
+# dbt machine-local user id (safe to regenerate)
+**/.user.yml
+
+# DuckDB databases and write-ahead logs (keep SQL/schema in repo)
+*.duckdb
+*.duckdb.wal
+
+# Optional: scraped or bulky local inputs (uncomment if you store large files here)
+# ingest/persistent_data/
+
 # OS files
 Thumbs.db
 Desktop.ini
 .DS_Store
 
-.bruin.yml
-
 # GCP service-account keyfiles
 .gcp/
 *.sa.json
-raw/*
-*.duckdb
-ingest/*
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!infra/terraform.tfvars.example
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
