@@ -91,8 +91,9 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
-# GCP service-account keyfiles
-.gcp/
+# GCP service-account keyfiles (keep ./.gcp/ for Docker bind mount)
+.gcp/*
+!.gcp/.gitkeep
 *.sa.json
 
 # Terraform
