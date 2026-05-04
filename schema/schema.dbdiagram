@@ -1,0 +1,120 @@
+// Grain: one row per camera_code × calendar_date (CCTV daily snapshot).
+// air_quality_sk / weather_sk: fill via admin/spatial match from stg_* to each camera + day.
+
+Table dim_camera {
+  camera_sk     int [pk, increment]
+  camera_code   varchar [unique, not null]
+  latitude      double
+  longitude     double
+  route_slug    varchar
+  adm2          varchar
+  adm4_sk          varchar
+  location_kode varchar
+  jalan         varchar
+  kabupaten     varchar
+}
+
+Table dim_date {
+  date_sk       int [pk, note: 'YYYYMMDD']
+  calendar_date date [unique, not null]
+  day           int
+  month         int
+  year          int
+}
+
+Table dim_air_quality {
+  // air_quality_sk       int [pk, increment]
+
+  adm4 int
+  station_id           varchar [not null]
+  observed_at          timestamp [not null]
+  aqi_value            int
+  aqi_category         varchar
+  dominant_params_json varchar
+  Indexes {
+    (station_id, observed_at) [unique]
+  }
+}
+
+Table dim_station {
+  station_id varchar [not null]
+  station_lat          double
+  station_lon          double
+  kota                 varchar
+  kecamatan            varchar
+}
+
+Table dim_weather {
+  // weather_sk             int [pk, increment]
+  weather_location_sk    int
+  forecast_datetime_utc  timestamptz [not null]
+  adm4_sk                   varchar
+  lat                    double
+  lon                    double
+  provinsi               varchar
+  kotkab                 varchar
+  kecamatan              varchar
+  temperature_c          int
+  weather_code           int
+  weather_desc_en        varchar
+  wind_speed_kmh         double
+  humidity_pct           int
+
+  Indexes {
+    (adm4_sk, forecast_datetime_utc)
+  }
+}
+
+
+Table dim_weather_location {
+  weather_location_sk double
+  adm4_sk double
+  provinsi varchar
+  kotkab varchar
+  kecamatan varchar
+  desa varchar
+  lat double
+  long double
+}
+
+Table fact_cctv_daily_snapshot {
+  fact_sk            bigint [pk, increment]
+  adm4_sk float
+  // camera_sk          int [not null, ref: > dim_camera.camera_sk, note: 'grain = camera_sk adalah kode unik dari cctv']
+  date_sk            int [not null, ref: > dim_date.date_sk]
+
+  // air_quality_sk     int [ref: > dim_air_quality.air_quality_sk]
+  // weather_sk         int [ref: > dim_weather.weather_sk]
+
+  // --- Speed / traffic (daily rollups from stg_speed, stg_hourly_speed, stg_total_hourly_speed, stg_timeseries_speed) ---
+  avg_speed_kmh              double  [note: 'e.g. mean 5-min speed for the day']
+  max_speed_kmh              double
+  min_speed_kmh              double
+  obs_speed_sample_count     bigint  [note: 'row count in day for quality']
+
+  total_volume_sm            double
+  total_volume_mp            double
+  total_volume_ks            double
+  total_volume_bb            double
+  total_volume_tb            double
+
+  // Optional: one column per timeseries slice for “last 7” daily context if you collapse hour 0–23
+  speed_timeseries_note      varchar [note: 'or replace with explicit measures if needed']
+
+  ingest_batch_ts            timestamp
+  dbt_updated_at             timestamp
+
+  Indexes {
+    (date_sk) [unique]
+  }
+}
+
+Ref: "dim_air_quality"."station_id" < "dim_station"."station_id"
+
+Ref: "dim_weather_location"."weather_location_sk" < "dim_weather"."weather_location_sk"
+
+Ref: "fact_cctv_daily_snapshot"."adm4_sk" < "dim_camera"."adm4_sk"
+
+Ref: "fact_cctv_daily_snapshot"."adm4_sk" < "dim_weather"."adm4_sk"
+
+Ref: "fact_cctv_daily_snapshot"."adm4_sk" < "dim_air_quality"."adm4"
