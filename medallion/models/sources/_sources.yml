@@ -4,10 +4,11 @@ sources:
   # Physical data: `source_data/raw_data.duckdb` (read-only attach; DBT_BRONZE_DUCKDB_PATH in profiles.yml).
   # dbt-duckdb loads it as catalog `cctv` (attach `alias` = `database` below). If you see
   # "catalog cctv does not exist", the attach failed—usually wrong cwd vs relative path; see README.
-  # `database: cctv` is DuckDB-only; `target: prod` (BigQuery) needs a separate raw-ingest story.
+  # Local DuckDB default: catalog `cctv`, schema `main`. BigQuery prod: set DBT_SOURCE_DATABASE
+  # (GCP project id) and DBT_SOURCE_SCHEMA (dataset with mirrored bronze tables — Parquet or JSON loads).
   - name: sources
-    database: cctv
-    schema: main
+    database: "{{ env_var('DBT_SOURCE_DATABASE', 'cctv') }}"
+    schema: "{{ env_var('DBT_SOURCE_SCHEMA', 'main') }}"
     description: Bronze layer tables in source_data/raw_data.duckdb (attached read-only)
     tables:
       - name: air_quality

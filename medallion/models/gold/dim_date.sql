@@ -1,4 +1,4 @@
-    {{
+{{
   config(
     materialized='table'
   )
@@ -51,6 +51,22 @@ distinct_dates AS (
     WHERE calendar_date IS NOT NULL
 )
 
+{% if target.type == 'bigquery' %}
+
+SELECT
+    CAST(
+        EXTRACT(YEAR FROM calendar_date) * 10000
+        + EXTRACT(MONTH FROM calendar_date) * 100
+        + EXTRACT(DAY FROM calendar_date) AS INT64
+    ) AS date_sk,
+    calendar_date,
+    CAST(EXTRACT(DAY FROM calendar_date) AS INT64) AS day,
+    CAST(EXTRACT(MONTH FROM calendar_date) AS INT64) AS month,
+    CAST(EXTRACT(YEAR FROM calendar_date) AS INT64) AS year
+FROM distinct_dates
+
+{% else %}
+
 SELECT
     CAST(
         year(calendar_date) * 10000
@@ -63,3 +79,5 @@ SELECT
     CAST(year(calendar_date) AS INTEGER) AS year
 FROM distinct_dates
 ORDER BY calendar_date
+
+{% endif %}

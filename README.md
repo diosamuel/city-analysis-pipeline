@@ -73,9 +73,22 @@ dbt test        # when you add tests
 [`medallion/profiles.yml`](medallion/profiles.yml):
 
 - **`dev`** — DuckDB (+ read-only bronze attach). Default target is **`dev`**
-- **`prod`** — BigQuery (requires a valid **service-account key** and dataset; paths in the committed example are placeholders you must replace for your GCP project)
+- **`prod`** — BigQuery via **`DBT_BIGQUERY_*`** env vars (service-account **`DBT_BIGQUERY_KEYFILE`**, **`DBT_BIGQUERY_PROJECT`**, **`DBT_BIGQUERY_DATASET`**, **`DBT_BIGQUERY_LOCATION`**). Silver reads bronze through **`DBT_SOURCE_DATABASE`** (GCP project id) + **`DBT_SOURCE_SCHEMA`** (dataset).
 
-To use BigQuery: set `target: prod` only after aligning `keyfile`, `project`, and `dataset`; raw ingests are still DuckDB-centric in this repo, so production warehousing may need a separate load/sync story.
+### Running dbt against BigQuery
+
+1. Create datasets in GCP (at minimum **`DBT_BIGQUERY_DATASET`** for models and **`DBT_SOURCE_SCHEMA`** for bronze mirrors). Grant the service account BigQuery permissions on both.
+2. Load bronze tables into **`DBT_SOURCE_SCHEMA`** with the **same names** as [`medallion/models/sources/_sources.yml`](medallion/models/sources/_sources.yml) (`cctv_list_final`, `vehicle_speed`, …). Prefer **JSON / Parquet** loads so array-like columns remain JSON arrays compatible with `PARSE_JSON` / `JSON_VALUE_ARRAY` in the BigQuery staging SQL.
+3. From **`medallion/`**, set env vars (see [`.env.example`](.env.example)), then:
+
+```bash
+dbt debug --target prod
+dbt run --target prod
+```
+
+On Windows PowerShell you can set variables for the session: `$env:DBT_BIGQUERY_KEYFILE='D:\path\.gcp\sa.json'` (and similarly for **`DBT_BIGQUERY_PROJECT`**, **`DBT_BIGQUERY_DATASET`**, **`DBT_SOURCE_DATABASE`**, **`DBT_SOURCE_SCHEMA`**).
+
+Ingest pipelines in this repo still write DuckDB bronze first; sync that layer to BigQuery with your preferred tool (scheduled export/ELT, `bq load`, orchestration in Kestra, etc.).
 
 ---
 

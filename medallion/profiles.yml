@@ -1,15 +1,18 @@
 # Use: DBT_PROFILES_DIR=<this folder> when profiles.yml is not in ~/.dbt/.
+#
+# Local DuckDB (default target): bronze attaches as catalog `cctv` — see README.
+# BigQuery (`target: prod`): set DBT_BIGQUERY_* and point DBT_SOURCE_* at your raw/bronze dataset.
 medallion:
   outputs:
     prod:
       type: bigquery
       method: service-account
-      keyfile:  /root/.dbt/learngcp-461809-4016cc4313d1.json
-      project: learngcp-461809
-      dataset: dbt_dio
-      threads: 1
+      keyfile: "{{ env_var('DBT_BIGQUERY_KEYFILE') }}"
+      project: "{{ env_var('DBT_BIGQUERY_PROJECT') }}"
+      dataset: "{{ env_var('DBT_BIGQUERY_DATASET', 'dbt_medallion') }}"
+      threads: 4
       timeout_seconds: 300
-      location: US
+      location: "{{ env_var('DBT_BIGQUERY_LOCATION', 'US') }}"
       priority: interactive
 
     dev:
@@ -22,4 +25,4 @@ medallion:
           type: duckdb
           read_only: true
 
-  target: dev          
+  target: dev

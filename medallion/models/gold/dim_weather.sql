@@ -17,6 +17,93 @@ WITH stg AS (
     WHERE forecast_datetime_utc IS NOT NULL
 ),
 
+{% if target.type == 'bigquery' %}
+
+location_keys AS (
+    SELECT DISTINCT
+        CAST(adm4 AS STRING) AS adm4_sk,
+        CAST(provinsi AS STRING) AS provinsi,
+        CAST(kotkab AS STRING) AS kotkab,
+        CAST(kecamatan AS STRING) AS kecamatan,
+        CAST(desa AS STRING) AS desa,
+        CAST(lat AS FLOAT64) AS lat,
+        CAST(lon AS FLOAT64) AS lon
+    FROM stg
+),
+
+location_sk AS (
+    SELECT
+        adm4_sk,
+        provinsi,
+        kotkab,
+        kecamatan,
+        desa,
+        lat,
+        lon,
+        CAST(
+            ROW_NUMBER()
+                OVER (
+                    ORDER BY
+                        adm4_sk NULLS LAST,
+                        provinsi NULLS LAST,
+                        kotkab NULLS LAST,
+                        kecamatan NULLS LAST,
+                        desa NULLS LAST,
+                        lat NULLS LAST,
+                        lon NULLS LAST
+                ) AS INT64
+        ) AS weather_location_sk
+    FROM location_keys
+),
+
+enriched AS (
+    SELECT
+        ls.weather_location_sk,
+        CAST(s.forecast_datetime_utc AS TIMESTAMP) AS forecast_datetime_utc,
+        CAST(s.adm4 AS STRING) AS adm4_sk,
+        CAST(s.lat AS FLOAT64) AS lat,
+        CAST(s.lon AS FLOAT64) AS lon,
+        CAST(s.provinsi AS STRING) AS provinsi,
+        CAST(s.kotkab AS STRING) AS kotkab,
+        CAST(s.kecamatan AS STRING) AS kecamatan,
+        CAST(s.temperature_c AS INT64) AS temperature_c,
+        CAST(s.weather_code AS INT64) AS weather_code,
+        CAST(s.weather_desc_en AS STRING) AS weather_desc_en,
+        CAST(s.wind_speed_kmh AS FLOAT64) AS wind_speed_kmh,
+        CAST(s.humidity_pct AS INT64) AS humidity_pct
+    FROM stg AS s
+    INNER JOIN location_sk AS ls
+        ON s.adm4 IS NOT DISTINCT FROM ls.adm4_sk
+        AND s.provinsi IS NOT DISTINCT FROM ls.provinsi
+        AND s.kotkab IS NOT DISTINCT FROM ls.kotkab
+        AND s.kecamatan IS NOT DISTINCT FROM ls.kecamatan
+        AND s.desa IS NOT DISTINCT FROM ls.desa
+        AND s.lat IS NOT DISTINCT FROM ls.lat
+        AND s.lon IS NOT DISTINCT FROM ls.lon
+)
+
+SELECT
+    weather_location_sk,
+    forecast_datetime_utc,
+    adm4_sk,
+    lat,
+    lon,
+    provinsi,
+    kotkab,
+    kecamatan,
+    temperature_c,
+    weather_code,
+    weather_desc_en,
+    wind_speed_kmh,
+    humidity_pct
+FROM enriched
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY weather_location_sk, forecast_datetime_utc
+    ORDER BY temperature_c DESC NULLS LAST
+) = 1
+
+{% else %}
+
 location_keys AS (
     SELECT DISTINCT
         adm4::VARCHAR(13) AS adm4_sk,
@@ -100,3 +187,5 @@ ORDER BY
     weather_location_sk,
     forecast_datetime_utc,
     temperature_c DESC NULLS LAST
+
+{% endif %}
