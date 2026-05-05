@@ -4,6 +4,22 @@ This repository collects and models **Indonesian smart-city style data**: **CCTV
 
 ---
 
+## Diagrams
+
+### Snowflake DWH schema
+
+Gold-layer logical model: fact table **`fact_cctv_daily_snapshot`** with dimensions (**`dim_camera`**, **`dim_date`**, **`dim_weather`**, **`dim_air_quality`**, etc.) for analytics.
+
+![Snowflake DWH schema](snowflake_schema.png)
+
+### Ingest pipeline flow
+
+Bronze **DuckDB** lifecycle: schema and wilayah SQL, CCTV transform and quarantine, recurring jobs for charts, BMKG weather, and air quality.
+
+![Ingest pipeline flow](ingest_pipeline.png)
+
+---
+
 ## Repository layout
 
 | Path | Role |
